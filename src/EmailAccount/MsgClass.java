@@ -1,14 +1,14 @@
-package EmailAccount.Msg;
+package EmailAccount;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class MsgClass implements Msg {
     private final String subject;
     private final String email;
     private final String text;
-    private final LocalDateTime date;
+    private final LocalDate date;
 
-    public MsgClass(String subject, String email, String text, LocalDateTime date) {
+    public MsgClass(String subject, String email, String text, LocalDate date) {
         this.subject = subject;
         this.email = email;
         this.date = date;
@@ -28,5 +28,9 @@ public class MsgClass implements Msg {
     @Override
     public String toString(){
         return date + " | "  + subject + " | " + email + " | " + text;
+    }
+
+    public String toStringWithoutText(){
+        return date + " | "  + subject + " | " + email;
     }
 }

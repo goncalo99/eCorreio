@@ -3,7 +3,7 @@ import EmailAccount.EmailAccountClass;
 import Enums.*;
 import Exceptions.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -13,6 +13,8 @@ import java.util.Scanner;
 public class Main {
 
     private static final String Success_Msg = "Mensagem registada.";
+    private static final String Normal_Format = "data | assunto | email";
+    private static final String with_text_Format = "data | assunto | email | texto";
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -61,7 +63,7 @@ public class Main {
      */
     private static Commands getCommand(Scanner in) {
         try {
-            return Commands.valueOf(in.next().toUpperCase().trim());
+            return Commands.valueOf(in.nextLine().toUpperCase().trim());
 
         } catch (IllegalArgumentException e) {
             return Commands.UNKNOWN;
@@ -81,12 +83,10 @@ public class Main {
         String subject = in.nextLine();
         String email = in.nextLine();
 
-        String text = null;
-        while(!in.hasNextInt())
-            text = text + in.nextLine();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
+        String text = in.nextLine();
+        String dateString = in.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        LocalDate date = LocalDate.parse(dateString,formatter);
         try{
             account.sendMsg(date, subject, email, text);
             return Success_Msg;
@@ -100,12 +100,10 @@ public class Main {
         String subject = in.nextLine();
         String email = in.nextLine();
 
-        String text = null;
-        while(!in.hasNextInt())
-            text = text + in.nextLine();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
+        String text = in.nextLine();
+        String dateString = in.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        LocalDate date = LocalDate.parse(dateString,formatter);
         try{
             account.receive(date, subject, email, text);
             return Success_Msg;
@@ -117,18 +115,19 @@ public class Main {
     }
 
     private static String sent(EmailAccount account) {
+        System.out.println(Normal_Format);
         return account.getSent();
     }
 
     private static String received(EmailAccount account) {
-        return account.getReceived();
+
+        System.out.println(Normal_Format);return account.getReceived();
     }
 
     private static String bySubject(Scanner in, EmailAccount account) {
         String subject = in.nextLine();
         try{
-            System.out.println(bySubject_Format);
-            return account.getMsgWithThatSubject(subject);
+            return with_text_Format + "\n" + account.getMsgWithThatSubject(subject);
         }
         catch(NonExistingSubjectException e){
             return e.getErrorMsg();
@@ -138,8 +137,8 @@ public class Main {
     private static String byEmail(Scanner in, EmailAccount account) {
         String email = in.nextLine();
         try{
-            System.out.println(byEmail_Format);
-            return account.getMsgWithThatEmail(email);
+
+            return with_text_Format + "\n" + account.getMsgWithThatEmail(email);
         }
         catch(NonExistingEmailException e){
             return e.getErrorMsg();
