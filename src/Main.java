@@ -3,6 +3,7 @@ import EmailAccount.EmailAccountClass;
 import Enums.Commands;
 import Enums.Sistema;
 import Exceptions.DuplicatedMsgException;
+import Exceptions.NonExistingSubjectException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,7 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static final String Sent_Msg = "Mensagem registada.";
+    private static final String Success_Msg = "Mensagem registada.";
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -90,35 +91,63 @@ public class Main {
         LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
         try{
             account.sendMsg(date, subject, email, msg);
+            return Success_Msg;
         }
         catch (DuplicatedMsgException e){
-            e.getErrorMsg();
+            return e.getErrorMsg();
         }
-        return Sent_Msg;
     }
 
     private static String receive(Scanner in, EmailAccount account) {
-        return null;
+        String subject = in.nextLine();
+        String email = in.nextLine();
+
+        String msg = null;
+        while(!in.hasNextInt())
+            msg = msg + in.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
+        try{
+            account.receive(date, subject, email, msg);
+            return Success_Msg;
+        }
+        catch (DuplicatedMsgException e){
+            return e.getErrorMsg();
+        }
+
     }
 
     private static String sent(EmailAccount account) {
-        return null;
+        return account.getSent();
     }
 
     private static String received(EmailAccount account) {
-        return null;
+        return account.getReceived();
     }
 
     private static String bySubject(Scanner in, EmailAccount account) {
-        return null;
+        String subject = in.nextLine();
+        try{
+            return account.getMsgWithThatSubject(subject);
+        }
+        catch(NonExistingSubjectException e){
+            return e.getErrorMsg();
+        }
     }
 
     private static String byEmail(Scanner in, EmailAccount account) {
-        return null;
+        String email = in.nextLine();
+        try{
+            return account.getMsgWithThatEmail(email);
+        }
+        catch(NonExistingSubjectException e){
+            return e.getErrorMsg();
+        }
     }
 
     private static String subjects(EmailAccount account) {
-        return null;
+        return account.getSubjects();
     }
 }
 
