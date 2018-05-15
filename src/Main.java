@@ -1,9 +1,7 @@
 import EmailAccount.EmailAccount;
 import EmailAccount.EmailAccountClass;
-import Enums.Commands;
-import Enums.Sistema;
-import Exceptions.DuplicatedMsgException;
-import Exceptions.NonExistingSubjectException;
+import Enums.*;
+import Exceptions.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -141,7 +139,7 @@ public class Main {
         try{
             return account.getMsgWithThatEmail(email);
         }
-        catch(NonExistingSubjectException e){
+        catch(NonExistingEmailException e){
             return e.getErrorMsg();
         }
     }
