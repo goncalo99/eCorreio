@@ -2,7 +2,7 @@ package EmailAccount.Msg;
 
 import java.time.LocalDateTime;
 
-abstract class MsgClass implements Msg {
+public class MsgClass implements Msg {
     private final String subject;
     private final String email;
     private final String text;
@@ -16,23 +16,8 @@ abstract class MsgClass implements Msg {
     }
 
     @Override
-    public String getSubject() {
-        return subject;
-    }
-
-    @Override
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public String getText() {
-        return text;
-    }
-
-    @Override
-    public LocalDateTime getDate() {
-        return date;
     }
 
     @Override
@@ -41,5 +26,7 @@ abstract class MsgClass implements Msg {
     }
 
     @Override
-    public abstract String toString();
+    public String toString(){
+        return date + " | "  + subject + " | " + email + " | " + text;
+    }
 }

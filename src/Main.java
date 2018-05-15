@@ -81,14 +81,14 @@ public class Main {
         String subject = in.nextLine();
         String email = in.nextLine();
 
-        String msg = null;
+        String text = null;
         while(!in.hasNextInt())
-            msg = msg + in.nextLine();
+            text = text + in.nextLine();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
         try{
-            account.sendMsg(date, subject, email, msg);
+            account.sendMsg(date, subject, email, text);
             return Success_Msg;
         }
         catch (DuplicatedMsgException e){
@@ -100,14 +100,14 @@ public class Main {
         String subject = in.nextLine();
         String email = in.nextLine();
 
-        String msg = null;
+        String text = null;
         while(!in.hasNextInt())
-            msg = msg + in.nextLine();
+            text = text + in.nextLine();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime date = LocalDateTime.parse(in.nextLine(),formatter);
         try{
-            account.receive(date, subject, email, msg);
+            account.receive(date, subject, email, text);
             return Success_Msg;
         }
         catch (DuplicatedMsgException e){
@@ -127,6 +127,7 @@ public class Main {
     private static String bySubject(Scanner in, EmailAccount account) {
         String subject = in.nextLine();
         try{
+            System.out.println(bySubject_Format);
             return account.getMsgWithThatSubject(subject);
         }
         catch(NonExistingSubjectException e){
@@ -137,6 +138,7 @@ public class Main {
     private static String byEmail(Scanner in, EmailAccount account) {
         String email = in.nextLine();
         try{
+            System.out.println(byEmail_Format);
             return account.getMsgWithThatEmail(email);
         }
         catch(NonExistingEmailException e){
