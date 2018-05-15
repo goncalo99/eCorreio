@@ -1,0 +1,39 @@
+Mensagem registada.
+
+Mensagem registada.
+
+Mensagem registada.
+
+Mensagem registada.
+
+data | assunto | email
+2012-01-29 | oi | outroamigo@ptmail.com
+2012-01-31 | oi | amigo@ptmail.com
+
+data | assunto | email
+2012-01-30 | re: oi | outroamigo@ptmail.com
+2012-02-01 | re: oi | amigo@ptmail.com
+
+data | assunto | email | texto
+2012-01-31 | oi | amigo@ptmail.com | Tudo bem?
+2012-01-29 | oi | outroamigo@ptmail.com | Tudo bem?
+
+data | assunto | email | texto
+2012-01-31 | oi | amigo@ptmail.com | Tudo bem?
+2012-02-01 | re: oi | amigo@ptmail.com | Sim, tudo. E contigo?
+
+oi
+re: oi
+
+Mensagem duplicada.
+
+Mensagem registada.
+
+Mensagem registada.
+
+Nao existem mensagens trocadas com esse assunto.
+
+Nao existem mensagens trocadas com esse email.
+
+A terminar.
+

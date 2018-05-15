@@ -1,0 +1,48 @@
+ENVIAR
+oi
+amigo@ptmail.com
+Tudo bem?
+2012-01-31
+ENVIAR
+oi
+outroamigo@ptmail.com
+Tudo bem?
+2012-01-29
+RECEBER
+re: oi
+amigo@ptmail.com
+Sim, tudo. E contigo?
+2012-02-01
+RECEBER
+re: oi
+outroamigo@ptmail.com
+Tudo ok!
+2012-01-30
+ENVIADAS
+RECEBIDAS
+ASSUNTO
+oi
+EMAIL
+amigo@ptmail.com
+ASSUNTOS
+ENVIAR
+oi
+amigo@ptmail.com
+Tudo bem? Corpo do email diferente agora mas deve falhar na mesma!
+2012-01-31
+ENVIAR
+oi
+amigo@ptmail.com
+Tudo bem? data diferente, deve aceitar.
+2012-01-30
+ENVIAR
+oi2
+amigo@ptmail.com
+Tudo bem? subject diferente, deve aceitar
+2012-01-31
+ASSUNTO
+oi_nao_existe
+EMAIL
+email_nao_existe
+SAIR
+
