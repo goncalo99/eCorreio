@@ -22,8 +22,8 @@ data | assunto | email | texto
 2012-01-31 | oi | amigo@ptmail.com | Tudo bem?
 2012-02-01 | re: oi | amigo@ptmail.com | Sim, tudo. E contigo?
 
-re: oi
 oi
+re: oi
 
 Mensagem duplicada.
 

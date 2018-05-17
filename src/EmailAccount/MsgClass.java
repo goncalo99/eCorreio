@@ -21,8 +21,13 @@ public class MsgClass implements Msg {
     }
 
     @Override
+    public String getSubject() {
+        return subject;
+    }
+
+    @Override
     public int compareTo(Msg other) {
-        return this.email.compareTo(other.getEmail());
+        return subject.concat(email).compareTo(other.getSubject().concat(other.getEmail()));
     }
 
     @Override

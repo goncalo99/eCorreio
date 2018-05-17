@@ -9,11 +9,10 @@ import java.util.*;
 
 public class EmailAccountClass implements EmailAccount {
 
-    private SortedMap<LocalDate, SortedMap<String, SortedSet<Msg>>> received;
-    private SortedMap<LocalDate, SortedMap<String, SortedSet<Msg>>> sent;
+    private SortedMap<LocalDate, SortedSet<Msg>> received;
+    private SortedMap<LocalDate, SortedSet<Msg>> sent;
     private Map<String, List<Msg>> byEmail;
     private Map<String, List<Msg>> bySubject;
-
 
 
     public EmailAccountClass() {
@@ -46,40 +45,36 @@ public class EmailAccountClass implements EmailAccount {
 
     @Override
     public String getMsgWithThatSubject(String subject) throws NonExistingSubjectException {
-        if (bySubject.get(subject)== null) throw new NonExistingSubjectException();
+        if (bySubject.get(subject) == null) throw new NonExistingSubjectException();
         return getMapStrings(subject, bySubject);
     }
 
 
-
     @Override
     public String getMsgWithThatEmail(String email) throws NonExistingEmailException {
-        if (byEmail.get(email)== null) throw new NonExistingEmailException();
+        if (byEmail.get(email) == null) throw new NonExistingEmailException();
         return getMapStrings(email, byEmail);
     }
 
     @Override
     public String getSubjects() {
         String result = "";
-        for(String subject:bySubject.keySet())
+        List<String> l = new ArrayList<>(bySubject.keySet());
+        Collections.sort(l);
+        for (String subject : l)
             result += subject + "\n";
         return result.substring(0, result.length() - 1);
     }
 
     //Private Methods
 
-    private void putMsgInSortedMap(LocalDate date, String subject, Msg msg, SortedMap<LocalDate,
-            SortedMap<String, SortedSet<Msg>>> sortedMap) {
-        try{
-            SortedMap<String,SortedSet<Msg>> byDate = sortedMap.get(date);
-            SortedSet<Msg> bySubject = byDate.get(subject);
-        }catch (NullPointerException e){
-            SortedMap<String,SortedSet<Msg>> byDate = new TreeMap<>();
-            SortedSet<Msg> bySubject = new TreeSet<>();
-            byDate.put(subject,bySubject);
-            bySubject.add(msg);
-            sortedMap.put(date, byDate);
+    private void putMsgInSortedMap(LocalDate date, Msg msg, SortedMap<LocalDate, SortedSet<Msg>> map) {
+        SortedSet<Msg> l = map.get(date);
+        if (l == null) {
+            l = new TreeSet<>();
+            map.put(date, l);
         }
+        l.add(msg);
 
     }
 
@@ -93,35 +88,34 @@ public class EmailAccountClass implements EmailAccount {
     }
 
     private void createMsg(LocalDate date, String subject, String email, String text,
-                           SortedMap<LocalDate, SortedMap<String, SortedSet<Msg>>> sortedMap) {
+                           SortedMap<LocalDate, SortedSet<Msg>> sortedMap) {
         if (byEmail.containsKey(email) && bySubject.containsKey(subject) && sortedMap.containsKey(date))
             throw new DuplicatedMsgException();
 
         Msg msg = new MsgClass(subject, email, text, date);
 
-        putMsgInSortedMap(date, subject, msg, sortedMap);
+        putMsgInSortedMap(date, msg, sortedMap);
         putMsgInMap(email, msg, byEmail);
         putMsgInMap(subject, msg, bySubject);
     }
 
-    private String getSortedMapStrings(SortedMap<LocalDate, SortedMap<String, SortedSet<Msg>>> sortedMap) {
+    private String getSortedMapStrings(SortedMap<LocalDate, SortedSet<Msg>> sortedMap) {
         String result = "";
         for (LocalDate date : sortedMap.keySet()) {
-            for (String subject : sortedMap.get(date).keySet()) {
-                Iterator<Msg> it =  sortedMap.get(date).get(subject).iterator();
-                while (it.hasNext())
-                    result += it.next().toStringWithoutText() + "\n";
-            }
+            Iterator<Msg> it = sortedMap.get(date).iterator();
+            while (it.hasNext())
+                result += it.next().toStringWithoutText() + "\n";
+
         }
-        return result.substring(0,result.length() - 1);
+        return result.substring(0, result.length() - 1);
     }
 
     private String getMapStrings(String key, Map<String, List<Msg>> map) {
         String result = "";
-        Iterator<Msg> it =  map.get(key).iterator();
+        Iterator<Msg> it = map.get(key).iterator();
         while (it.hasNext())
             result += it.next() + "\n";
-        return result.substring(0,result.length() - 1);
+        return result.substring(0, result.length() - 1);
     }
 
 
